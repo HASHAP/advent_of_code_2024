@@ -1,22 +1,21 @@
 use std::{
     error::Error,
     fs::File,
-    i8,
     io::{BufRead, BufReader},
     path::Path,
 };
 
-pub fn d_2_p_2() {
-    println!("day 2 part 1");
-    let mut in_vec: Vec<String> = Vec::new();
-    let _a = read_text("input_2.txt", &mut in_vec);
-    let num_vec: Vec<Vec<i32>> = create_num_vec(&mut in_vec);
-    let _b = validity(num_vec);
+pub fn day_2_p_2() {
+    println!("day 2 part 2");
+    let mut str_vec: Vec<String> = Vec::new();
+    let _a = read_text(&mut str_vec, "input_2.txt");
+    let mut num_vec: Vec<Vec<i32>> = create_num_vec(&mut str_vec);
+    println!("{:?}", num_vec);
 }
-
+//function to read txt file and convert eah line into a String
 fn read_text<P: AsRef<Path>>(
-    filename: P,
     input_vector: &mut Vec<String>,
+    filename: P,
 ) -> Result<(), Box<dyn Error>> {
     let file = File::open(filename)?;
     let reader = BufReader::new(file);
@@ -25,6 +24,7 @@ fn read_text<P: AsRef<Path>>(
     }
     Ok(())
 }
+//function to convert lines of String into a i32 2-d vector
 fn create_num_vec(str_vec: &mut Vec<String>) -> Vec<Vec<i32>> {
     let mut num_vec: Vec<Vec<i32>> = Vec::new();
     for i in 0..str_vec.len() {
@@ -57,8 +57,8 @@ fn check_distance(num_vec: &Vec<i32>, order: i8) -> bool {
             for i in 0..(num_vec.len() - 1) {
                 if num_vec[i] - num_vec[i + 1] > 3 {
                     return false;
-                }else if num_vec[i] -num_vec[i+1] < 1{
-                    return false
+                } else if num_vec[i] - num_vec[i + 1] < 1 {
+                    return false;
                 }
             }
         }
@@ -66,8 +66,8 @@ fn check_distance(num_vec: &Vec<i32>, order: i8) -> bool {
             for i in 0..(num_vec.len() - 1) {
                 if num_vec[i + 1] - num_vec[i] > 3 {
                     return false;
-                }else if num_vec[i+1] -num_vec[i] < 1{
-                    return false
+                } else if num_vec[i + 1] - num_vec[i] < 1 {
+                    return false;
                 }
             }
         }
@@ -76,16 +76,6 @@ fn check_distance(num_vec: &Vec<i32>, order: i8) -> bool {
     println!("{:?}", num_vec);
     true
 }
-fn validity(mut num_vec: Vec<Vec<i32>>) -> () {
-    let sort_order: Vec<i8> = check_order(&mut num_vec);
-    let mut valid_vec: Vec<bool> = Vec::new();
-    for i in 0..sort_order.len() {
-        if sort_order[i] < 3_i8 {
-            valid_vec.push(check_distance(&num_vec[i], sort_order[i]));
-        } else {
-            valid_vec.push(false);
-        }
-    }
-    let sum: i32 = valid_vec.iter().filter(|&x| *x == true).count() as i32;
-    println!("{}", sum);
+fn check_validity(num_vec: mut Vec<Vec<i32>>) ->(){
+
 }
